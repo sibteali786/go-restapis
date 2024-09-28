@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"text/template"
 
+	"frontendmasters.com/go/femm/api"
 	"frontendmasters.com/go/femm/data"
 )
 
@@ -27,6 +28,8 @@ func main() {
 	server := http.NewServeMux()
 	server.HandleFunc("/hello", helloHandler)
 	server.HandleFunc("/template", handleTemplate)
+	server.HandleFunc("/api/getExhibitions", api.Get)
+	server.HandleFunc("/api/exhibitions/new", api.Post)
 	fs := http.FileServer(http.Dir("./public"))
 	server.Handle("/", fs)
 	err := http.ListenAndServe(":3333", server)
